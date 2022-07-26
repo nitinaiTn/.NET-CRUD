@@ -15,8 +15,8 @@ namespace UserSignupLogin.Models
 
     public partial class TBLUserInfo
     {
-        internal object UserUS;
-        internal object PasswordUS;
+        //internal object UserUS;
+        //internal object PasswordUS;
 
         public int IdUs { get; set; }
 

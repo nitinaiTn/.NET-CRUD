@@ -1,0 +1,56 @@
+﻿@model UserSignupLogin.Models.TBLUserInfo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TBLUserInfo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdUs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserUs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserUs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PasswordUs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PasswordUs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RePasswordUs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RePasswordUs)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

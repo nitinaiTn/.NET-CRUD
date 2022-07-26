@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Signup")
 </p>
 <table class="table">
     <tr>
@@ -20,9 +20,9 @@
         <th>
             @Html.DisplayNameFor(model => model.PasswordUs)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.RePasswordUs)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -37,13 +37,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.PasswordUs)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.RePasswordUs)
-        </td>
+        </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Edit", "Edit", new { idUs = item.IdUs }) |
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Delete", "Delete", new { idUs = item.IdUs })
         </td>
     </tr>
 }
