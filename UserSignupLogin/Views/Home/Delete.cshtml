@@ -44,7 +44,14 @@
         </dd>
 
     </dl>
-
+    @if(ViewBag.Message != null)
+            {
+                <script type= "text/javascript">
+                    window.onload = function () {
+                        alert("@ViewBag.Message")
+                    };
+                </script>
+            }
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
