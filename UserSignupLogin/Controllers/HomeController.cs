@@ -40,15 +40,11 @@ namespace UserSignupLogin.Controllers
                 Session["UserUsSS"] = tBLUserInfo.UserUs.ToString();
                 MessageBox.Show("Create Success", " Create Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 StreamWriter file = new StreamWriter("d:\\LogTest.txt",append: true);
-                //
-
                 file.WriteLine("Log Create At Time : "+DateTime.Now.ToString());
                 file.WriteLine("Create Name = " + tBLUserInfo.UserUs.ToString());
                 file.WriteLine("Create Pasword = "+tBLUserInfo.PasswordUs.ToString());
                 file.WriteLine("");
                 file.Close();
-
-                //sw.WriteLine("-----------Crate Details on " + " " + DateTime.Now.ToString() + "-----------------"+tBLUserInfo.IdUs.ToString());
                 return RedirectToAction("Index", "Home");
             }
             
@@ -68,21 +64,7 @@ namespace UserSignupLogin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Login(TBLUserInfo tBLUserInfo)
-        //{
-        //    var checkLogin = db.TBLUserInfoes.Where(x => x.UserUs.Equals(tBLUserInfo.UserUs) && x.PasswordUs.Equals(tBLUserInfo.PasswordUs)).FirstOrDefault();
-        //    if (checkLogin != null)
-        //    {
-        //        Session["IdUsSS"] = tBLUserInfo.IdUs.ToString();
-        //        Session["UserUsSS"] = tBLUserInfo.UserUs.ToString();
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Notification("Wrong username and password");
-        //    }
-        //    return View();
-        //
+
         public ActionResult Login(TBLUserInfo objUser)
         {
             var data = db.TBLUserInfoes.Where(a => a.UserUs.Equals(objUser.UserUs) && a.PasswordUs.Equals(objUser.PasswordUs)).FirstOrDefault();
@@ -121,12 +103,7 @@ namespace UserSignupLogin.Controllers
         {
             using (var context = new DBuserSignupLoginEntities())
             {
-
-                // Use of lambda expression to access
-                // particular record from a database
                 var data = context.TBLUserInfoes.FirstOrDefault(x => x.IdUs == idUs);
-
-                // Checking if any such record exist 
                 if (data != null)
                 {
                     data.UserUs = model.UserUs;
@@ -140,9 +117,6 @@ namespace UserSignupLogin.Controllers
                     file.WriteLine("");
                     file.Close();
                     MessageBox.Show("Edit Success", " Edit Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // It will redirect to 
-                    // the Read method
                     return RedirectToAction("Index");
                 }
                 else
@@ -166,15 +140,12 @@ namespace UserSignupLogin.Controllers
                 var data = context.TBLUserInfoes.FirstOrDefault(x => x.IdUs == idUs);
                 if (data != null)
                 {
-                    //Response.Write("<script>alert('Your text');</script>");
                     StreamWriter file = new StreamWriter("d:\\LogTest.txt", append: true);
                     file.WriteLine("Log Delete At Time : " + DateTime.Now.ToString());
-                    //file.WriteLine("Delete User Name : "+ Model.)
                     file.WriteLine("");
                     file.Close();
                     context.TBLUserInfoes.Remove(data);
                     context.SaveChanges();
-                    ViewBag.Message = "Delete Success";
                     MessageBox.Show("Delete Success", " Delete Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return RedirectToAction("Index");
                 }

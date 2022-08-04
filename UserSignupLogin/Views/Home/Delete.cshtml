@@ -32,26 +32,16 @@
         </dt>
 
         <dd>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PasswordUs, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PasswordUs, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PasswordUs, "", new { @class = "text-danger" })
+                </div>
+            </div>
             @Html.DisplayFor(model => model.PasswordUs)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RePasswordUs)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RePasswordUs)
-        </dd>
-
     </dl>
-    @if(ViewBag.Message != null)
-            {
-                <script type= "text/javascript">
-                    window.onload = function () {
-                        alert("@ViewBag.Message")
-                    };
-                </script>
-            }
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 

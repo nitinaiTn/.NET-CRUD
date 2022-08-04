@@ -36,7 +36,5 @@ namespace UserSignupLogin.Models
         //[Required(ErrorMessage = "This field is required")]
         //[Display(Name = "RePassword")]
         //[Compare("Passwordus",ErrorMessage = "Confirm password doesn't match")]
-        public string RePasswordUs { get; set; }
-
     }
 }
