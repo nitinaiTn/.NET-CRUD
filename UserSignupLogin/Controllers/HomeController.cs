@@ -11,7 +11,6 @@ namespace UserSignupLogin.Controllers
     public class HomeController : Controller
     {
         DBuserSignupLoginEntities db = new DBuserSignupLoginEntities();
-        private object tBLUserInfo;
 
         // GET: Home
         public ActionResult Index()
@@ -36,8 +35,6 @@ namespace UserSignupLogin.Controllers
             {
                 db.TBLUserInfoes.Add(tBLUserInfo);
                 db.SaveChanges();
-                Session["IdUsSS"] = tBLUserInfo.IdUs.ToString();
-                Session["UserUsSS"] = tBLUserInfo.UserUs.ToString();
                 MessageBox.Show("Create Success", " Create Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 StreamWriter file = new StreamWriter("d:\\LogTest.txt",append: true);
                 file.WriteLine("Log Create At Time : "+DateTime.Now.ToString());
@@ -79,11 +76,11 @@ namespace UserSignupLogin.Controllers
                 ViewBag.Message = "Wrong Try Again";
                 return View();
             }
-            using (var context = new DBuserSignupLoginEntities())
-            {
+            //using (var context = new DBuserSignupLoginEntities())
+            //{
                
                     
-            }
+            //}
         }
 
         //edit module
@@ -152,6 +149,37 @@ namespace UserSignupLogin.Controllers
                 else
                     return View();
             }
+        }
+
+        //Calculator moudle
+        public ActionResult Calculate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Calculate(string firstNumber, string secondNumber, string Cal)
+        {
+            int a = Convert.ToInt32(firstNumber);
+            int b = Convert.ToInt32(secondNumber);
+            int c = 0;
+            switch (Cal)
+            {
+                case "Add":
+                    c = a + b;
+                    break;
+                case "Sub":
+                    c = a - b;
+                    break;
+                case "Mul":
+                    c = a * b;
+                    break;
+                case "Div":
+                    c = a / b;
+                    break;
+            }
+            ViewBag.Result = c;
+            return View();
         }
     }
 }

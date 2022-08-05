@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<UserSignupLogin.Models.TBLUserInfo>
+@*@model IEnumerable<UserSignupLogin.Models.StudentDetail>*@
+
 
 @{
     ViewBag.Title = "Index";
@@ -36,10 +38,52 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { idUs = item.IdUs }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
             @Html.ActionLink("Delete", "Delete", new { idUs = item.IdUs })
         </td>
     </tr>
 }
 
 </table>
+<h4>Student Detail Table</h4>
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(models => models.StudentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(models => models.StudentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(models => models.Major)
+        </th>
+        <th>
+            @Html.DisplayNameFor(models => models.Year)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Models)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItems => item.StudentID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItems => item.StudentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItems => item.Major)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItems => item.Year)
+            </td>
+            <td>
+            @Html.ActionLink("Edit", "Edit", new { idUs = item.IdUs }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { idUs = item.IdUs })
+        </td>
+        </tr>
+    }
+
+</table>*@

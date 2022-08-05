@@ -11,14 +11,12 @@ namespace UserSignupLogin.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    public partial class TBLUserInfo
-    {
-
-        public int IdUs { get; set; }
-        public string UserUs { get; set; }
-        public string PasswordUs { get; set; }
     
+    public partial class StudentDetail
+    {
+        public int StudentID { get; set; }
+        public string StudentName { get; set; }
+        public string Major { get; set; }
+        public Nullable<int> Year { get; set; }
     }
 }
