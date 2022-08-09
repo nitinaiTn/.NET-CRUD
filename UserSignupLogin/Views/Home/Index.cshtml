@@ -23,7 +23,9 @@
     @using (Html.BeginForm())
     {
     <p>
-        @Html.TextBox("search")
+        <input type="text" name="searchUser" placeholder="Enter UserName" />
+        <input type="text" name="searchStudent" placeholder="Enter StudentName" />
+        <input type="text" name="searchSubject" placeholder="Enter SubjectName" />
         <input type="submit" name="submit" value="Search" />
     </p>
 }
@@ -55,15 +57,6 @@
         </table>
     </div>
 
- <p>
-        @using (Html.BeginForm())
-            {
-                <p>
-                    @Html.TextBox("search")
-                    <input type="submit" name="submit" value="Search" />
-                </p>
-            }
- </p>
 
         <div class="tab-pane container active p-0" id="home">
             <h5 class="text-uppercase p-2 text-center">List of Student</h5>
@@ -96,25 +89,14 @@
         </div>
     </div>
 
-    <p>
-        @using (Html.BeginForm())
-        {
-        <p>
-            @*<input type="text" name="search" placeholder="Enter Search Student" />*@
-            @Html.TextBox("search")
-            <input type="submit" name="submit" value="Search" />
-        </p>
-        }
-        </p>
-
         <div class="tab-pane container active p-0" id="home">
             <h5 class="text-uppercase p-2 text-center">List of Subject</h5>
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark text-white">
                     <tr>
                         <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectID)</th>
-                        <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectID)</th>
-                        <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectID)</th>
+                        <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectName)</th>
+                        <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().TeacherName)</th>
 
                     </tr>
                 </thead>
