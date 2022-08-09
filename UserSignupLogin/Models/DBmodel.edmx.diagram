@@ -4,8 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ce7e2cdac08844edbfd7c378ef343206" Name="Diagram1">
-        <EntityTypeShape EntityType="DBuserSignupLoginModel.TBLUserInfo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="614bc5343f2647da9fc4e1089283d4ef" Name="Diagram1">
+        <EntityTypeShape EntityType="DBuserSignupLoginModel.StudentDetail" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBuserSignupLoginModel.TBLUserInfo" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBuserSignupLoginModel.SubjectDetail" Width="1.5" PointX="0.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

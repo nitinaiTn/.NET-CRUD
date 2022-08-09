@@ -12,11 +12,10 @@ namespace UserSignupLogin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TBLUserInfo
+    public partial class SubjectDetail
     {
-       
-        public int IdUs { get; set; }
-        public string UserUs { get; set; }
-        public string PasswordUs { get; set; }
+        public string SubjectName { get; set; }
+        public string TeacherName { get; set; }
+        public int SubjectID { get; set; }
     }
 }

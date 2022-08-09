@@ -1,89 +1,145 @@
-﻿@model IEnumerable<UserSignupLogin.Models.TBLUserInfo>
-@*@model IEnumerable<UserSignupLogin.Models.StudentDetail>*@
-
+﻿@model UserSignupLogin.ViewModel.StudentViewModel
 
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>Index</h2>
-
 <p>
     @Html.ActionLink("Create New", "Signup")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IdUs)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserUs)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PasswordUs)
-        </th>
-        <th></th>
-    </tr>
+@*<ul class="nav nav-pills">
+        <li class="nav-item ">
+            <a class="nav-link active rounded-0" data-toggle="pill" href="#home">Employee</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link rounded-0" data-toggle="pill" href="#menu1">Department</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link rounded-0" data-toggle="pill" href="#menu2">Incentive</a>
+        </li>
+    </ul>*@
+<div class="tab-content">
+    <div class="tab-pane container active p-0" id="home">
+        <h5 class="text-uppercase p-2 text-center">List of Username And Password</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.TBLUserInfoes.FirstOrDefault().UserUs)</th>
+                    <th>@Html.DisplayNameFor(m => Model.TBLUserInfoes.FirstOrDefault().PasswordUs)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var id in Model.TBLUserInfoes)
+                {
+                    <tr>
+                        <td>@id.UserUs</td>
+                        <td>@id.PasswordUs</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { idUs = id.IdUs }) |
+                            @Html.ActionLink("Delete", "Delete", new { idUs = id.IdUs })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+<div class="tab-pane container active p-0" id="home">
+    <h5 class="text-uppercase p-2 text-center">List of Student</h5>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark text-white">
+            <tr>
+                <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().StudentID)</th>
+                <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().StudentName)</th>
+                <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().Major)</th>
+                <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().Year)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.StudentDetails)
+            {
+                <tr>
+                    <td>@student.StudentID</td>
+                    <td>@student.StudentName</td>
+                    <td>@student.Major</td>
+                    <td>@student.Year</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit"@*new { idUs = item.IdUs }*@) |
+                        @Html.ActionLink("Delete", "Delete"@*new { idUs = item.IdUs }*@)
+                    </td>
+                </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdUs)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserUs)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PasswordUs)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { idUs = item.IdUs }) |
-            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-            @Html.ActionLink("Delete", "Delete", new { idUs = item.IdUs })
-        </td>
-    </tr>
-}
+            }
+        </tbody>
+    </table>
+</div>
+</div>
 
-</table>
-<h4>Student Detail Table</h4>
-@*<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(models => models.StudentID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(models => models.StudentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(models => models.Major)
-        </th>
-        <th>
-            @Html.DisplayNameFor(models => models.Year)
-        </th>
-        <th></th>
-    </tr>
+<div class="tab-pane container active p-0" id="home">
+    <h5 class="text-uppercase p-2 text-center">List of Subject</h5>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark text-white">
+            <tr>
+                <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectID)</th>
+                <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectID)</th>
+                <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectID)</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subject in Model.SubjectDetails)
+            {
+                <tr>
+                    <td>@subject.SubjectID</td>
+                    <td>@subject.SubjectName</td>
+                    <td>@subject.TeacherName</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit"@*new { idUs = item.IdUs }*@) |
+                        @Html.ActionLink("Delete", "Delete"@*new { idUs = item.IdUs }*@)
+                    </td>
+                </tr>
 
-    @foreach (var item in Models)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItems => item.StudentID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItems => item.StudentName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItems => item.Major)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItems => item.Year)
-            </td>
-            <td>
-            @Html.ActionLink("Edit", "Edit", new { idUs = item.IdUs }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { idUs = item.IdUs })
-        </td>
-        </tr>
-    }
+            }
+        </tbody>
+    </table>
+</div>
+</div>
 
-</table>*@
+
+@*<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    </head>
+    <body>
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/popper.min.js"></script>
+    </body>
+    </html>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    </head>
+    <body>
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/popper.min.js"></script>
+    </body>
+    </html>*@

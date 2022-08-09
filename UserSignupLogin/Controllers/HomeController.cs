@@ -6,16 +6,24 @@ using System.Web;
 using System.Web.Mvc;
 using System.Windows.Forms;
 using UserSignupLogin.Models;
+using UserSignupLogin.ViewModel;
 namespace UserSignupLogin.Controllers
 {
     public class HomeController : Controller
     {
-        DBuserSignupLoginEntities db = new DBuserSignupLoginEntities();
+        private readonly DBuserSignupLoginEntities2 db = new DBuserSignupLoginEntities2();
 
         // GET: Home
+
         public ActionResult Index()
         {
-            return View(db.TBLUserInfoes.ToList());
+            var tables = new StudentViewModel()
+            {
+                StudentDetails = db.StudentDetails.ToList(),
+                SubjectDetails = db.SubjectDetails.ToList(),
+                TBLUserInfoes = db.TBLUserInfoes.ToList()
+            };
+            return View(tables);
         }
 
         public ActionResult Signup() 
@@ -86,7 +94,7 @@ namespace UserSignupLogin.Controllers
         //edit module
         public ActionResult Edit(int idUs)
         {
-            using (var context = new DBuserSignupLoginEntities())
+            using (var context = new DBuserSignupLoginEntities2())
             {
                 var data = context.TBLUserInfoes.Where(x => x.IdUs == idUs).SingleOrDefault();
                 return View(data);
@@ -98,7 +106,7 @@ namespace UserSignupLogin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int idUs, TBLUserInfo model)
         {
-            using (var context = new DBuserSignupLoginEntities())
+            using (var context = new DBuserSignupLoginEntities2())
             {
                 var data = context.TBLUserInfoes.FirstOrDefault(x => x.IdUs == idUs);
                 if (data != null)
@@ -132,7 +140,7 @@ namespace UserSignupLogin.Controllers
         public ActionResult
         Delete(int idUs)
         {
-            using (var context = new DBuserSignupLoginEntities())
+            using (var context = new DBuserSignupLoginEntities2())
             {
                 var data = context.TBLUserInfoes.FirstOrDefault(x => x.IdUs == idUs);
                 if (data != null)
@@ -160,9 +168,11 @@ namespace UserSignupLogin.Controllers
         [HttpPost]
         public ActionResult Calculate(string firstNumber, string secondNumber, string Cal)
         {
+            CheckNullErr(firstNumber, secondNumber);
             int a = Convert.ToInt32(firstNumber);
             int b = Convert.ToInt32(secondNumber);
             int c = 0;
+            
             switch (Cal)
             {
                 case "Add":
@@ -175,11 +185,37 @@ namespace UserSignupLogin.Controllers
                     c = a * b;
                     break;
                 case "Div":
-                    c = a / b;
+                    CheckDivZero(a , b, c);
                     break;
             }
             ViewBag.Result = c;
             return View();
+        }
+
+        public ActionResult CheckDivZero(int a, int b, int c)
+        {
+            if(b != 0)
+            {
+                c = a / b;
+            }
+            else
+            {
+                ViewBag.DivZero = "Div By Zero Please Try Agian";
+            }
+            return View();
+        }
+
+        public ActionResult CheckNullErr(string FNum, string SNum)
+        {
+            if (FNum != null && SNum != null)
+            {
+                return RedirectToAction("Calculate");
+            }
+            else
+            {
+                ViewBag.NullErr = "Please Insert Number In Form";
+                return View();
+            }
         }
     }
 }

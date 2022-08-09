@@ -13,10 +13,10 @@ namespace UserSignupLogin.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DBuserSignupLoginEntities : DbContext
+    public partial class DBuserSignupLoginEntities2 : DbContext
     {
-        public DBuserSignupLoginEntities()
-            : base("name=DBuserSignupLoginEntities")
+        public DBuserSignupLoginEntities2()
+            : base("name=DBuserSignupLoginEntities2")
         {
         }
     
@@ -25,6 +25,8 @@ namespace UserSignupLogin.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<StudentDetail> StudentDetails { get; set; }
         public virtual DbSet<TBLUserInfo> TBLUserInfoes { get; set; }
+        public virtual DbSet<SubjectDetail> SubjectDetails { get; set; }
     }
 }
