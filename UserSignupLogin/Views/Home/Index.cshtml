@@ -48,8 +48,8 @@
                         <td>@id.UserUs</td>
                         <td>@id.PasswordUs</td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { idUs = id.IdUs }) |
-                            @Html.ActionLink("Delete", "Delete", new { idUs = id.IdUs })
+                            @Html.ActionLink("Edit", "Edit", routeValues: new { idUs = id.IdUs }, htmlAttributes: new { @class = "btn btn-default btn-info" })
+                            @Html.ActionLink("Delete", "Delete", routeValues: new { idUs = id.IdUs }, htmlAttributes: new { @class = "btn btn-danger btn-info" })
                         </td>
                     </tr>
                 }
@@ -78,11 +78,10 @@
                             <td>@student.Major</td>
                             <td>@student.Year</td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit"@*new { idUs = item.IdUs }*@) |
-                                @Html.ActionLink("Delete", "Delete"@*new { idUs = item.IdUs }*@)
-                            </td>
+                                @Html.ActionLink("Edit", "Edit", routeValues: new { idUs = student.StudentID }, htmlAttributes: new { @class = "btn btn-default btn-info" })
+                                @Html.ActionLink("Delete", "Delete", routeValues: new { idUs = student.StudentID }, htmlAttributes: new { @class = "btn btn-danger btn-info" })
+                            </td>    
                         </tr>
-
                     }
                 </tbody>
             </table>
@@ -108,11 +107,10 @@
                             <td>@subject.SubjectName</td>
                             <td>@subject.TeacherName</td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit"@*new { idUs = item.IdUs }*@) |
-                                @Html.ActionLink("Delete", "Delete"@*new { idUs = item.IdUs }*@)
+                                @Html.ActionLink("Edit", "Edit", routeValues: new { idUs = subject.SubjectID }, htmlAttributes: new { @class = "btn btn-default btn-info" })
+                                @Html.ActionLink("Delete", "Delete", routeValues: new { idUs = subject.SubjectID }, htmlAttributes: new { @class = "btn btn-danger btn-info" })
                             </td>
                         </tr>
-
                     }
                 </tbody>
             </table>
