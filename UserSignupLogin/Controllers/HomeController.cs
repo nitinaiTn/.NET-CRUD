@@ -15,15 +15,39 @@ namespace UserSignupLogin.Controllers
 
         // GET: Home
 
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    var tables = new StudentViewModel()
+        //    {
+        //        StudentDetails = db.StudentDetails.ToList(),
+        //        SubjectDetails = db.SubjectDetails.ToList(),
+        //        TBLUserInfoes = db.TBLUserInfoes.ToList()
+        //    };
+        //    return View(tables);
+        //}
+
+        public ActionResult Index(String search)
         {
-            var tables = new StudentViewModel()
+            if (String.IsNullOrEmpty(search)) {
+                var tables = new StudentViewModel()
+                {
+                    StudentDetails = db.StudentDetails.ToList(),
+                    SubjectDetails = db.SubjectDetails.ToList(),
+                    TBLUserInfoes = db.TBLUserInfoes.ToList()
+                };
+                return View(tables);
+            }
+            else
             {
-                StudentDetails = db.StudentDetails.ToList(),
-                SubjectDetails = db.SubjectDetails.ToList(),
-                TBLUserInfoes = db.TBLUserInfoes.ToList()
-            };
-            return View(tables);
+                var tables = new StudentViewModel()
+                {
+                    StudentDetails = db.StudentDetails.Where(x => x.StudentName.StartsWith(search)).ToList(),
+                    SubjectDetails = db.SubjectDetails.Where(x => x.SubjectName.StartsWith(search)).ToList(),
+                    TBLUserInfoes = db.TBLUserInfoes.Where(x => x.UserUs.StartsWith(search)).ToList()
+                };
+                return View(tables);
+            }
+            
         }
 
         public ActionResult Signup() 
