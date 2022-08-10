@@ -25,26 +25,87 @@ namespace UserSignupLogin.Controllers
         //    };
         //    return View(tables);
         //}
-        String[] search = new string[3];
-        public ActionResult Index(String searchUser, String searchStudent, String searchSubject)
+        public ActionResult searchData(String searchUser, String searchStudent, String searchSubject)
+        {
+            var tables = new StudentViewModel()
+            {
+                StudentDetails = db.StudentDetails.ToList(),
+                SubjectDetails = db.SubjectDetails.ToList(),
+                TBLUserInfoes = db.TBLUserInfoes.ToList()
+            };
+            return View(tables);
+        }
+        int count;
+        public ActionResult SortingCol(String SortParameter)
+        {
+            //ViewBag.SortingName = String.IsNullOrEmpty(SortRRR) ? "Sorting" : "NotSort";
+            
+            if (SortParameter == "User" && count == 0)
+            {
+                SortParameter = "NotSort";
+                count = count+1;
+            }
+            else
+            {
+                SortParameter = "Sorting";
+                count--;
+            }
+
+            if(SortParameter == "Sorting")
+            {
+                var sortt = new StudentViewModel()
+                {
+                    StudentDetails = db.StudentDetails.OrderByDescending(x => x.StudentName).ToList(),
+                    SubjectDetails = db.SubjectDetails.OrderByDescending(x => x.SubjectName).ToList(),
+                    TBLUserInfoes = db.TBLUserInfoes.OrderByDescending(x => x.UserUs).ToList()
+                };
+                return View(sortt);
+            }
+            else if (SortParameter == "NotSort")
+            {
+                var sortt = new StudentViewModel()
+                {
+                    StudentDetails = db.StudentDetails.OrderBy(x => x.StudentName).ToList(),
+                    SubjectDetails = db.SubjectDetails.OrderBy(x => x.SubjectName).ToList(),
+                    TBLUserInfoes = db.TBLUserInfoes.OrderBy(x => x.UserUs).ToList()
+                };
+                return View(sortt);
+            }
+            else
+            {
+                return View();
+            }
+            
+        }
+        //public ActionResult searchStudent(String searchStudent) {
+        //    StudentViewModel = new StudentViewModel()
+        //    {
+
+        //    };
+           
+        //    return View(searchStudent); 
+        //}
+        public ActionResult Index(String searchUser, String searchStudent, String searchSubject , String Sort)
         {
             if ((String.IsNullOrEmpty(searchUser)) && (String.IsNullOrEmpty(searchStudent)) && (String.IsNullOrEmpty(searchSubject)))//Not Search
+            {  
+                if(Sort != null)
                 {
-                var tables = new StudentViewModel()
+                    return SortingCol(Sort);
+                }
+                else
                 {
-                    StudentDetails = db.StudentDetails.ToList(),
-                    SubjectDetails = db.SubjectDetails.ToList(),
-                    TBLUserInfoes = db.TBLUserInfoes.ToList()
-                };
-                return View(tables);
+                    return searchData(searchUser, searchStudent, searchSubject);
+                }
+                
             }
             else if (!(String.IsNullOrEmpty(searchUser)) && !(String.IsNullOrEmpty(searchStudent)) && !(String.IsNullOrEmpty(searchSubject)))//search UserName && StudentName && SubjectName
             {
                 var tables = new StudentViewModel()
                 {
-                    StudentDetails = db.StudentDetails.Where(x => x.StudentName.StartsWith(searchStudent)).ToList(),
-                    SubjectDetails = db.SubjectDetails.Where(x => x.SubjectName.StartsWith(searchSubject)).ToList(),
-                    TBLUserInfoes = db.TBLUserInfoes.Where(x => x.UserUs.StartsWith(searchUser)).ToList()
+                    StudentDetails = db.StudentDetails.Where(x => x.StudentName.StartsWith(searchStudent) || x.Major.StartsWith(searchStudent) || x.StudentID.ToString().StartsWith(searchStudent) || x.Year.ToString().StartsWith(searchStudent)).ToList(),
+                    SubjectDetails = db.SubjectDetails.Where(x => x.SubjectName.StartsWith(searchSubject) || x.SubjectID.ToString().StartsWith(searchSubject) || x.TeacherName.StartsWith(searchSubject)).ToList(),
+                    TBLUserInfoes = db.TBLUserInfoes.Where(x => x.UserUs.StartsWith(searchUser) || x.PasswordUs.StartsWith(searchUser)).ToList()
                 };
                 return View(tables);
             }
@@ -52,9 +113,9 @@ namespace UserSignupLogin.Controllers
             {
                 var tables = new StudentViewModel()
                 {
-                    StudentDetails = db.StudentDetails.Where(x => x.StudentName.StartsWith(searchStudent)).ToList(),
+                    StudentDetails = db.StudentDetails.Where(x => x.StudentName.StartsWith(searchStudent) || x.Major.StartsWith(searchStudent) || x.StudentID.ToString().StartsWith(searchStudent) || x.Year.ToString().StartsWith(searchStudent)).ToList(),
                     SubjectDetails = db.SubjectDetails.ToList(),
-                    TBLUserInfoes = db.TBLUserInfoes.Where(x => x.UserUs.StartsWith(searchUser)).ToList()
+                    TBLUserInfoes = db.TBLUserInfoes.Where(x => x.UserUs.StartsWith(searchUser) || x.PasswordUs.StartsWith(searchUser)).ToList()
                 };
                 return View(tables);
             }
@@ -63,8 +124,8 @@ namespace UserSignupLogin.Controllers
                 var tables = new StudentViewModel()
                 {
                     StudentDetails = db.StudentDetails.ToList(),
-                    SubjectDetails = db.SubjectDetails.Where(x => x.SubjectName.StartsWith(searchSubject)).ToList(),
-                    TBLUserInfoes = db.TBLUserInfoes.Where(x => x.UserUs.StartsWith(searchUser)).ToList()
+                    SubjectDetails = db.SubjectDetails.Where(x => x.SubjectName.StartsWith(searchSubject) || x.SubjectID.ToString().StartsWith(searchSubject) || x.TeacherName.StartsWith(searchSubject)).ToList(),
+                    TBLUserInfoes = db.TBLUserInfoes.Where(x => x.UserUs.StartsWith(searchUser) || x.PasswordUs.StartsWith(searchUser)).ToList()
                 };
                 return View(tables);
             }
@@ -72,8 +133,8 @@ namespace UserSignupLogin.Controllers
             {
                 var tables = new StudentViewModel()
                 {
-                    StudentDetails = db.StudentDetails.Where(x => x.StudentName.StartsWith(searchStudent)).ToList(),
-                    SubjectDetails = db.SubjectDetails.Where(x => x.SubjectName.StartsWith(searchSubject)).ToList(),
+                    StudentDetails = db.StudentDetails.Where(x => x.StudentName.StartsWith(searchStudent) || x.Major.StartsWith(searchStudent) || x.StudentID.ToString().StartsWith(searchStudent) || x.Year.ToString().StartsWith(searchStudent)).ToList(),
+                    SubjectDetails = db.SubjectDetails.Where(x => x.SubjectName.StartsWith(searchSubject) || x.SubjectID.ToString().StartsWith(searchSubject) || x.TeacherName.StartsWith(searchSubject)).ToList(),
                     TBLUserInfoes = db.TBLUserInfoes.ToList()
                 };
                 return View(tables);
@@ -85,7 +146,7 @@ namespace UserSignupLogin.Controllers
                 {
                     StudentDetails = db.StudentDetails.ToList(),
                     SubjectDetails = db.SubjectDetails.ToList(),
-                    TBLUserInfoes = db.TBLUserInfoes.Where(x => x.UserUs.StartsWith(searchUser)).ToList()
+                    TBLUserInfoes = db.TBLUserInfoes.Where(x => x.UserUs.StartsWith(searchUser)|| x.PasswordUs.StartsWith(searchUser)).ToList()
                 };
                 return View(tables);
             }
@@ -93,7 +154,7 @@ namespace UserSignupLogin.Controllers
             {
                 var tables = new StudentViewModel()
                 {
-                    StudentDetails = db.StudentDetails.Where(x => x.StudentName.StartsWith(searchStudent)).ToList(),
+                    StudentDetails = db.StudentDetails.Where(x => x.StudentName.StartsWith(searchStudent)||x.Major.StartsWith(searchStudent)||x.StudentID.ToString().StartsWith(searchStudent)||x.Year.ToString().StartsWith(searchStudent)).ToList(),
                     SubjectDetails = db.SubjectDetails.ToList(),
                     TBLUserInfoes = db.TBLUserInfoes.ToList()
                 };
@@ -104,7 +165,7 @@ namespace UserSignupLogin.Controllers
                 var tables = new StudentViewModel()
                 {
                     StudentDetails = db.StudentDetails.ToList(),
-                    SubjectDetails = db.SubjectDetails.Where(x => x.SubjectName.StartsWith(searchSubject)).ToList(),
+                    SubjectDetails = db.SubjectDetails.Where(x => x.SubjectName.StartsWith(searchSubject) || x.SubjectID.ToString().StartsWith(searchSubject) || x.TeacherName.StartsWith(searchSubject)).ToList(),
                     TBLUserInfoes = db.TBLUserInfoes.ToList()
                 };
                 return View(tables);
@@ -113,7 +174,7 @@ namespace UserSignupLogin.Controllers
             else
             {
                 return View();
-            }
+            }    
         }
 
         public ActionResult Signup() 

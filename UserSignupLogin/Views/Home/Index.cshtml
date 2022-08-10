@@ -5,31 +5,24 @@
     ViewBag.Title = "Index";
 }
 <h2>Index</h2>
+
 <p>
     @Html.ActionLink("Create New", "Signup")
 </p>
-@*<ul class="nav nav-pills">
-        <li class="nav-item ">
-            <a class="nav-link active rounded-0" data-toggle="pill" href="#home">Employee</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link rounded-0" data-toggle="pill" href="#menu1">Department</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link rounded-0" data-toggle="pill" href="#menu2">Incentive</a>
-        </li>
-    </ul>*@
+
 <p>
     @using (Html.BeginForm())
     {
-    <p>
-        <input type="text" name="searchUser" placeholder="Enter UserName" />
-        <input type="text" name="searchStudent" placeholder="Enter StudentName" />
-        <input type="text" name="searchSubject" placeholder="Enter SubjectName" />
+        <b>Search Student Table > </b>
+        <input type="text" name="searchUser" placeholder="Enter UserName Detail" />
+        <b>Search Student Table > </b>
+        <input type="text" name="searchStudent" placeholder="Enter Student Detail" />
+        <b>Search Subject Table > </b>
+        <input type="text" name="searchSubject" placeholder="Enter Subject Detail" />
         <input type="submit" name="submit" value="Search" />
-    </p>
-}
-    </p>
+   
+     }
+</p>
 
 <div class="tab-content">
     <div class="tab-pane container active p-0" id="home">
@@ -37,7 +30,8 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark text-white">
                 <tr>
-                    <th>@Html.DisplayNameFor(m => Model.TBLUserInfoes.FirstOrDefault().UserUs)</th>
+                    @*<th>@Html.DisplayNameFor(m => Model.TBLUserInfoes.FirstOrDefault().UserUs) </th>*@
+                    <th>@Html.ActionLink("User", "Index", new { Sort = "User" })</th>        
                     <th>@Html.DisplayNameFor(m => Model.TBLUserInfoes.FirstOrDefault().PasswordUs)</th>
                 </tr>
             </thead>
@@ -57,102 +51,105 @@
         </table>
     </div>
 
+    @*<p>
+        @using (Html.BeginForm())
+        {
+            <b>Search StudentID > </b>
+            <input type="text" name="searchStudentID" placeholder="Enter Student ID" />
+            <b>Search StudentName > </b>
+            <input type="text" name="searchStudent" placeholder="Enter Student Name" />
+            <b>Search Major > </b>
+            <input type="text" name="searchStudentMajor" placeholder="Enter Student Major" /><br>
+            <b>Search Year > </b>
+            <input type="text" name="searchStudentYear" placeholder="Enter Student Year" />
+            <input type="submit" name="submit" value="Search" />
 
-        <div class="tab-pane container active p-0" id="home">
-            <h5 class="text-uppercase p-2 text-center">List of Student</h5>
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark text-white">
+        }
+    </p>*@
+
+    </p>
+    <div class="tab-pane container active p-0" id="home">
+        <h5 class="text-uppercase p-2 text-center">List of Student</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().StudentID)</th>
+                    <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().StudentName)</th>
+                    <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().Major)</th>
+                    <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().Year)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.StudentDetails)
+                {
                     <tr>
-                        <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().StudentID)</th>
-                        <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().StudentName)</th>
-                        <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().Major)</th>
-                        <th>@Html.DisplayNameFor(m => Model.StudentDetails.FirstOrDefault().Year)</th>
+                        <td>@student.StudentID</td>
+                        <td>@student.StudentName</td>
+                        <td>@student.Major</td>
+                        <td>@student.Year</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", routeValues: new { idUs = student.StudentID }, htmlAttributes: new { @class = "btn btn-default btn-info" })
+                            @Html.ActionLink("Delete", "Delete", routeValues: new { idUs = student.StudentID }, htmlAttributes: new { @class = "btn btn-danger btn-info" })
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var student in Model.StudentDetails)
-                    {
-                        <tr>
-                            <td>@student.StudentID</td>
-                            <td>@student.StudentName</td>
-                            <td>@student.Major</td>
-                            <td>@student.Year</td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", routeValues: new { idUs = student.StudentID }, htmlAttributes: new { @class = "btn btn-default btn-info" })
-                                @Html.ActionLink("Delete", "Delete", routeValues: new { idUs = student.StudentID }, htmlAttributes: new { @class = "btn btn-danger btn-info" })
-                            </td>    
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </div>
+</div>
 
-        <div class="tab-pane container active p-0" id="home">
-            <h5 class="text-uppercase p-2 text-center">List of Subject</h5>
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark text-white">
-                    <tr>
-                        <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectID)</th>
-                        <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectName)</th>
-                        <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().TeacherName)</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var subject in Model.SubjectDetails)
-                    {
+   
+            <div class="tab-pane container active p-0" id="home">
+                <h5 class="text-uppercase p-2 text-center">List of Subject</h5>
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark text-white">
                         <tr>
-                            <td>@subject.SubjectID</td>
-                            <td>@subject.SubjectName</td>
-                            <td>@subject.TeacherName</td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", routeValues: new { idUs = subject.SubjectID }, htmlAttributes: new { @class = "btn btn-default btn-info" })
-                                @Html.ActionLink("Delete", "Delete", routeValues: new { idUs = subject.SubjectID }, htmlAttributes: new { @class = "btn btn-danger btn-info" })
-                            </td>
+                            <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectID)</th>
+                            <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectName)</th>
+                            <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().TeacherName)</th>
+
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        </div>
+                    </thead>
+                    <tbody>
+                        @foreach (var subject in Model.SubjectDetails)
+                        {
+                            <tr>
+                                <td>@subject.SubjectID</td>
+                                <td>@subject.SubjectName</td>
+                                <td>@subject.TeacherName</td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", routeValues: new { idUs = subject.SubjectID }, htmlAttributes: new { @class = "btn btn-default btn-info" })
+                                    @Html.ActionLink("Delete", "Delete", routeValues: new { idUs = subject.SubjectID }, htmlAttributes: new { @class = "btn btn-danger btn-info" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            </div>
 
+            @*@section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
 
-        @*<!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="utf-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>@ViewBag.Title - My ASP.NET Application</title>
-                <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-                <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-                <script src="~/Scripts/modernizr-2.6.2.js"></script>
-            </head>
-            <body>
-                <div class="container body-content">
-                    @RenderBody()
-                </div>
-                <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-                <script src="~/Scripts/bootstrap.min.js"></script>
-                <script src="~/Scripts/popper.min.js"></script>
-            </body>
-            </html>
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="utf-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>@ViewBag.Title - My ASP.NET Application</title>
-                <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-                <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-                <script src="~/Scripts/modernizr-2.6.2.js"></script>
-            </head>
-            <body>
-                <div class="container body-content">
-                    @RenderBody()
-                </div>
-                <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-                <script src="~/Scripts/bootstrap.min.js"></script>
-                <script src="~/Scripts/popper.min.js"></script>
-            </body>
-            </html>*@
+                }
+                <script src="~/Scripts/bootstrap.js"></script>*@
+            @*<!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="utf-8" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>@ViewBag.Title - My ASP.NET Application</title>
+                    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+                    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+                    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+                </head>
+                <body>
+                    <div class="container body-content">
+                        @RenderBody()
+                    </div>
+                    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+                    <script src="~/Scripts/bootstrap.min.js"></script>
+                    <script src="~/Scripts/popper.min.js"></script>
+                </body>
+                </html>*@
+
