@@ -31,8 +31,9 @@
             <thead class="thead-dark text-white">
                 <tr>
                     @*<th>@Html.DisplayNameFor(m => Model.TBLUserInfoes.FirstOrDefault().UserUs) </th>*@
-                    <th>@Html.ActionLink("User", "Index", new { Sort = "User" })</th>        
-                    <th>@Html.DisplayNameFor(m => Model.TBLUserInfoes.FirstOrDefault().PasswordUs)</th>
+                    <th>@Html.ActionLink("UserName", "Index", new { sortUser = "User" })</th>
+                    <th>@Html.ActionLink("Password", "Index", new { sortPassword = "Password" })</th>
+                    @*<th>@Html.DisplayNameFor(m => Model.TBLUserInfoes.FirstOrDefault().PasswordUs)</th>*@
                 </tr>
             </thead>
             <tbody>

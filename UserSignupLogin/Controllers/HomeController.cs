@@ -35,39 +35,65 @@ namespace UserSignupLogin.Controllers
             };
             return View(tables);
         }
-        int count;
-        public ActionResult SortingCol(String SortParameter)
+        
+        public ActionResult SortingCol(String sortUser, String sortPassword)
         {
             //ViewBag.SortingName = String.IsNullOrEmpty(SortRRR) ? "Sorting" : "NotSort";
-            
-            if (SortParameter == "User" && count == 0)
+         
+            if (sortUser == "User" && sortPassword == null)
             {
-                SortParameter = "NotSort";
-                count = count+1;
+                sortUser = "NotSort";
             }
-            else
+            else if(sortUser != "User" && sortPassword == null)
             {
-                SortParameter = "Sorting";
-                count--;
+                sortUser = "Sorting";  
+            }
+            else if(sortPassword == "Password" && sortUser == null)
+            {
+                sortPassword = "NotSort";
+            }
+            else if(sortPassword != "Password" && sortUser == null)
+            {
+                sortPassword = "Sorting";
             }
 
-            if(SortParameter == "Sorting")
+            if (sortUser == "Sorting")
             {
                 var sortt = new StudentViewModel()
                 {
-                    StudentDetails = db.StudentDetails.OrderByDescending(x => x.StudentName).ToList(),
-                    SubjectDetails = db.SubjectDetails.OrderByDescending(x => x.SubjectName).ToList(),
+                    StudentDetails = db.StudentDetails.ToList(),
+                    SubjectDetails = db.SubjectDetails.ToList(),
                     TBLUserInfoes = db.TBLUserInfoes.OrderByDescending(x => x.UserUs).ToList()
                 };
                 return View(sortt);
             }
-            else if (SortParameter == "NotSort")
+            else if (sortUser == "NotSort")
             {
                 var sortt = new StudentViewModel()
                 {
-                    StudentDetails = db.StudentDetails.OrderBy(x => x.StudentName).ToList(),
-                    SubjectDetails = db.SubjectDetails.OrderBy(x => x.SubjectName).ToList(),
+                    StudentDetails = db.StudentDetails.ToList(),
+                    SubjectDetails = db.SubjectDetails.ToList(),
                     TBLUserInfoes = db.TBLUserInfoes.OrderBy(x => x.UserUs).ToList()
+                };
+                return View(sortt);
+            }
+            else if (sortPassword == "Sorting")
+            {
+                var sortt = new StudentViewModel()
+                {
+                    StudentDetails = db.StudentDetails.ToList(),
+                    SubjectDetails = db.SubjectDetails.ToList(),
+                    TBLUserInfoes = db.TBLUserInfoes.OrderByDescending(x => x.PasswordUs).ToList()
+                };
+                return View(sortt);
+            }
+            else if (sortPassword == "NotSort")
+            {
+                var sortt = new StudentViewModel()
+                {
+                    StudentDetails = db.StudentDetails.ToList(),
+                    SubjectDetails = db.SubjectDetails.ToList(),
+                    TBLUserInfoes = db.TBLUserInfoes.OrderBy(x => x.PasswordUs).ToList()
                 };
                 return View(sortt);
             }
@@ -85,13 +111,13 @@ namespace UserSignupLogin.Controllers
            
         //    return View(searchStudent); 
         //}
-        public ActionResult Index(String searchUser, String searchStudent, String searchSubject , String Sort)
+        public ActionResult Index(String searchUser, String searchStudent, String searchSubject , String sortUser, String sortPassword)
         {
             if ((String.IsNullOrEmpty(searchUser)) && (String.IsNullOrEmpty(searchStudent)) && (String.IsNullOrEmpty(searchSubject)))//Not Search
-            {  
-                if(Sort != null)
+            {
+                if (sortUser != null || sortPassword != null)
                 {
-                    return SortingCol(Sort);
+                    return SortingCol(sortUser, sortPassword);
                 }
                 else
                 {
