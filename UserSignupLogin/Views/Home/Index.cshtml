@@ -5,7 +5,7 @@
     ViewBag.Title = "Index";
 }
 <h2>Index</h2>
-
+<script src="controller/action" type="javascript"></script>
 <p>
     @Html.ActionLink("Create New", "Signup")
 </p>
@@ -14,15 +14,26 @@
     @using (Html.BeginForm())
     {
         <b>Search Student Table > </b>
-        <input type="text" name="searchUser" placeholder="Enter UserName Detail" />
+        <input type="text" id="searchUser" name="searchUser" placeholder="Enter UserName Detail" @*onclick="this.value"*@ />
         <b>Search Student Table > </b>
-        <input type="text" name="searchStudent" placeholder="Enter Student Detail" />
+        <input type="text" id="searchStudent" name="searchStudent" placeholder="Enter Student Detail" @*onclick="this.value"*@/>
         <b>Search Subject Table > </b>
-        <input type="text" name="searchSubject" placeholder="Enter Subject Detail" />
-        <input type="submit" name="submit" value="Search" />
-   
-     }
+        <input type="search" id="searchSubject" name="searchSubject" placeholder="Enter Subject Detail" onclick="this.value"/>
+        <input type="submit" name="submit" value="Search" onclick="GetAndSetValue()" />
+
+    }
 </p>
+
+<script>
+    function GetAndSetValue(searchUser, searchStudent, searchSubject) {
+        /*var txt1 = document.getElementById("searchUser").value;*/
+        document.getElementById("searchUser").value = searchUser;
+        /*var txt2 = document.getElementById("searchStudent").value;*/
+        document.getElementById("searchStudent").value = searchStudent;
+        /*var txt3 = document.getElementById("searchSubject").value;*/
+        document.getElementById("searchSubject").value = searchSubject;
+    }
+</script>
 
 <div class="tab-content">
     <div class="tab-pane container active p-0" id="home">
@@ -53,20 +64,20 @@
     </div>
 
     @*<p>
-        @using (Html.BeginForm())
-        {
-            <b>Search StudentID > </b>
-            <input type="text" name="searchStudentID" placeholder="Enter Student ID" />
-            <b>Search StudentName > </b>
-            <input type="text" name="searchStudent" placeholder="Enter Student Name" />
-            <b>Search Major > </b>
-            <input type="text" name="searchStudentMajor" placeholder="Enter Student Major" /><br>
-            <b>Search Year > </b>
-            <input type="text" name="searchStudentYear" placeholder="Enter Student Year" />
-            <input type="submit" name="submit" value="Search" />
+            @using (Html.BeginForm())
+            {
+                <b>Search StudentID > </b>
+                <input type="text" name="searchStudentID" placeholder="Enter Student ID" />
+                <b>Search StudentName > </b>
+                <input type="text" name="searchStudent" placeholder="Enter Student Name" />
+                <b>Search Major > </b>
+                <input type="text" name="searchStudentMajor" placeholder="Enter Student Major" /><br>
+                <b>Search Year > </b>
+                <input type="text" name="searchStudentYear" placeholder="Enter Student Year" />
+                <input type="submit" name="submit" value="Search" />
 
-        }
-    </p>*@
+            }
+        </p>*@
 
     </p>
     <div class="tab-pane container active p-0" id="home">
@@ -99,58 +110,58 @@
     </div>
 </div>
 
-   
-            <div class="tab-pane container active p-0" id="home">
-                <h5 class="text-uppercase p-2 text-center">List of Subject</h5>
-                <table class="table table-bordered table-striped">
-                    <thead class="thead-dark text-white">
-                        <tr>
-                            <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectID)</th>
-                            <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectName)</th>
-                            <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().TeacherName)</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var subject in Model.SubjectDetails)
-                        {
-                            <tr>
-                                <td>@subject.SubjectID</td>
-                                <td>@subject.SubjectName</td>
-                                <td>@subject.TeacherName</td>
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", routeValues: new { idUs = subject.SubjectID }, htmlAttributes: new { @class = "btn btn-default btn-info" })
-                                    @Html.ActionLink("Delete", "Delete", routeValues: new { idUs = subject.SubjectID }, htmlAttributes: new { @class = "btn btn-danger btn-info" })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+<div class="tab-pane container active p-0" id="home">
+    <h5 class="text-uppercase p-2 text-center">List of Subject</h5>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark text-white">
+            <tr>
+                <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectID)</th>
+                <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().SubjectName)</th>
+                <th>@Html.DisplayNameFor(m => Model.SubjectDetails.FirstOrDefault().TeacherName)</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subject in Model.SubjectDetails)
+            {
+                <tr>
+                    <td>@subject.SubjectID</td>
+                    <td>@subject.SubjectName</td>
+                    <td>@subject.TeacherName</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", routeValues: new { idUs = subject.SubjectID }, htmlAttributes: new { @class = "btn btn-default btn-info" })
+                        @Html.ActionLink("Delete", "Delete", routeValues: new { idUs = subject.SubjectID }, htmlAttributes: new { @class = "btn btn-danger btn-info" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
             </div>
-            </div>
 
-            @*@section Scripts {
-                    @Scripts.Render("~/bundles/jqueryval")
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
 
-                }
-                <script src="~/Scripts/bootstrap.js"></script>*@
-            @*<!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="utf-8" />
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>@ViewBag.Title - My ASP.NET Application</title>
-                    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-                    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-                    <script src="~/Scripts/modernizr-2.6.2.js"></script>
-                </head>
-                <body>
-                    <div class="container body-content">
-                        @RenderBody()
-                    </div>
-                    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-                    <script src="~/Scripts/bootstrap.min.js"></script>
-                    <script src="~/Scripts/popper.min.js"></script>
-                </body>
-                </html>*@
+    }
+    <script src="~/Scripts/bootstrap.js"></script>*@
+@*<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    </head>
+    <body>
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/popper.min.js"></script>
+    </body>
+    </html>*@
 
