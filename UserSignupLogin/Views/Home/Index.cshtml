@@ -14,17 +14,17 @@
     @using (Html.BeginForm())
     {
         <b>Search Student Table > </b>
-        <input type="text" id="searchUser" name="searchUser" placeholder="Enter UserName Detail" @*onclick="this.value"*@ />
+        <input type="text" id="searchUser" name="searchUser" placeholder="Enter UserName Detail"  @*onclick="this.value"*@ value = "@ViewBag.txtUser"   />
         <b>Search Student Table > </b>
-        <input type="text" id="searchStudent" name="searchStudent" placeholder="Enter Student Detail" @*onclick="this.value"*@/>
+        <input type="text" id="searchStudent" name="searchStudent" placeholder="Enter Student Detail" @*@8onclick="this.value"*@ value ="@ViewBag.txtStudent" />
         <b>Search Subject Table > </b>
-        <input type="search" id="searchSubject" name="searchSubject" placeholder="Enter Subject Detail" onclick="this.value"/>
-        <input type="submit" name="submit" value="Search" onclick="GetAndSetValue()" />
+        <input type="search" id="searchSubject" name="searchSubject" placeholder="Enter Subject Detail" @*onclick="this.value"*@ value ="@ViewBag.txtSubject" />
+        <input type="submit" name="submit" value="Search" @*onclick="GetAndSetValue()"*@ />
 
     }
 </p>
 
-<script>
+@*<script>
     function GetAndSetValue(searchUser, searchStudent, searchSubject) {
         /*var txt1 = document.getElementById("searchUser").value;*/
         document.getElementById("searchUser").value = searchUser;
@@ -33,7 +33,7 @@
         /*var txt3 = document.getElementById("searchSubject").value;*/
         document.getElementById("searchSubject").value = searchSubject;
     }
-</script>
+</script>*@
 
 <div class="tab-content">
     <div class="tab-pane container active p-0" id="home">
@@ -42,8 +42,8 @@
             <thead class="thead-dark text-white">
                 <tr>
                     @*<th>@Html.DisplayNameFor(m => Model.TBLUserInfoes.FirstOrDefault().UserUs) </th>*@
-                    <th>@Html.ActionLink("UserName", "Index", new { sortUser = "User" })</th>
-                    <th>@Html.ActionLink("Password", "Index", new { sortPassword = "Password" })</th>
+                    <th>@Html.ActionLink("UserName", "Index", new { sortUser = "UserSort" })</th>
+                    <th>@Html.ActionLink("Password", "Index", new { sortPassword = "PasswordSort" })</th>
                     @*<th>@Html.DisplayNameFor(m => Model.TBLUserInfoes.FirstOrDefault().PasswordUs)</th>*@
                 </tr>
             </thead>
@@ -79,7 +79,6 @@
             }
         </p>*@
 
-    </p>
     <div class="tab-pane container active p-0" id="home">
         <h5 class="text-uppercase p-2 text-center">List of Student</h5>
         <table class="table table-bordered table-striped">

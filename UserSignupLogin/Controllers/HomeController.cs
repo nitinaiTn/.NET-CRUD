@@ -25,28 +25,10 @@ namespace UserSignupLogin.Controllers
         //    };
         //    return View(tables);
         //
-        public ActionResult SortingCol(String sortUser, String sortPassword)
+        public ActionResult SortingCol(String sortUser, String sortPassword, String searchUser, String searchStudent, String searchSubject)
         {
             //ViewBag.SortingName = String.IsNullOrEmpty(SortRRR) ? "Sorting" : "NotSort";
-         
-            if (sortUser == "User" && sortPassword == null)
-            {
-                sortUser = "NotSort";
-            }
-            else if(sortUser != "User" && sortPassword == null)
-            {
-                sortUser = "Sorting";  
-            }
-            else if(sortPassword == "Password" && sortUser == null)
-            {
-                sortPassword = "NotSort";
-            }
-            else if(sortPassword != "Password" && sortUser == null)
-            {
-                sortPassword = "Sorting";
-            }
-
-            if (sortUser == "Sorting")
+            if (sortUser == "UserSort")
             {
                 var sortt = new StudentViewModel()
                 {
@@ -56,17 +38,8 @@ namespace UserSignupLogin.Controllers
                 };
                 return View(sortt);
             }
-            else if (sortUser == "NotSort")
-            {
-                var sortt = new StudentViewModel()
-                {
-                    StudentDetails = db.StudentDetails.ToList(),
-                    SubjectDetails = db.SubjectDetails.ToList(),
-                    TBLUserInfoes = db.TBLUserInfoes.OrderBy(x => x.UserUs).ToList()
-                };
-                return View(sortt);
-            }
-            else if (sortPassword == "Sorting")
+
+            else if (sortPassword == "PasswordSort")
             {
                 var sortt = new StudentViewModel()
                 {
@@ -76,7 +49,27 @@ namespace UserSignupLogin.Controllers
                 };
                 return View(sortt);
             }
-            else if (sortPassword == "NotSort")
+            else if (sortUser == "UserSort" && !String.IsNullOrEmpty(searchUser))
+            {
+                var sortt = new StudentViewModel()
+                {
+                    StudentDetails = db.StudentDetails.ToList(),
+                    SubjectDetails = db.SubjectDetails.ToList(),
+                    TBLUserInfoes = db.TBLUserInfoes.Where(x => x.UserUs.StartsWith(searchUser) || x.PasswordUs.StartsWith(searchUser)).OrderByDescending(x => x.UserUs).ToList()
+                };
+                return View(sortt);
+            }
+            else if (sortUser == "UserNotSort")
+            {
+                var sortt = new StudentViewModel()
+                {
+                    StudentDetails = db.StudentDetails.ToList(),
+                    SubjectDetails = db.SubjectDetails.ToList(),
+                    TBLUserInfoes = db.TBLUserInfoes.OrderBy(x => x.UserUs).ToList()
+                };
+                return View(sortt);
+            }
+            else if (sortPassword == null)
             {
                 var sortt = new StudentViewModel()
                 {
@@ -175,21 +168,14 @@ namespace UserSignupLogin.Controllers
                     break;
             }
         }
-        //public ActionResult reInput(String searchUser, String searchStudent, String searchSubject)
-        //{
-        //    String txt = searchUser;
-        //    searchUser = txt;
-        //    return View();
-        //}
 
-        StudentViewModel tables = new StudentViewModel();
         public ActionResult Index(String searchUser, String searchStudent, String searchSubject , String sortUser, String sortPassword)
         {
             if ((String.IsNullOrEmpty(searchUser)) && (String.IsNullOrEmpty(searchStudent)) && (String.IsNullOrEmpty(searchSubject)))//Not Search
             {
                 if (sortUser != null || sortPassword != null)
                 {
-                    return SortingCol(sortUser, sortPassword);
+                    return SortingCol(sortUser, sortPassword, searchUser, searchStudent, searchSubject);
                 }
                 else
                 {
@@ -231,8 +217,11 @@ namespace UserSignupLogin.Controllers
                 return View();
             }
 
+            ViewBag.txtUser = "ZXas";
+            ViewBag.txtStudent = searchStudent;
+            ViewBag.txtSubject = searchSubject;
             //ViewData["JavaScriptFunction"] = "GetAndSetValue();";
-            ViewBag.JavaScriptFunction = string.Format("GetAndSetValue('{0}','{1}','{2});", searchUser, searchStudent, searchSubject);
+            //ViewBag.JavaScriptFunction = string.Format("GetAndSetValue('{0}','{1}','{2});", searchUser, searchStudent, searchSubject);
             //ViewBag.JavaScriptFunction = string.Format("GetAndSetValue();");
         }
 
@@ -378,54 +367,69 @@ namespace UserSignupLogin.Controllers
         [HttpPost]
         public ActionResult Calculate(string firstNumber, string secondNumber, string Cal)
         {
-            CheckNullErr(firstNumber, secondNumber);
-            int a = Convert.ToInt32(firstNumber);
-            int b = Convert.ToInt32(secondNumber);
-            int c = 0;
-            
-            switch (Cal)
+            //CheckNullErr(firstNumber, secondNumber);
+            try
             {
-                case "Add":
-                    c = a + b;
-                    break;
-                case "Sub":
-                    c = a - b;
-                    break;
-                case "Mul":
-                    c = a * b;
-                    break;
-                case "Div":
-                    CheckDivZero(a , b, c);
-                    break;
-            }
-            ViewBag.Result = c;
-            return View();
-        }
+                int a = Convert.ToInt32(firstNumber);
+                int b = Convert.ToInt32(secondNumber);
+                int c = 0;
 
-        public ActionResult CheckDivZero(int a, int b, int c)
-        {
-            if(b != 0)
-            {
-                c = a / b;
+                switch (Cal)
+                {
+                    case "Add":
+                        c = a + b;
+                        break;
+                    case "Sub":
+                        c = a - b;
+                        break;
+                    case "Mul":
+                        c = a * b;
+                        break;
+                    case "Div":
+                        c = a / b;
+                        break;
+                }
+                ViewBag.Result = c;
             }
-            else
+            catch (DivideByZeroException e)
             {
                 ViewBag.DivZero = "Div By Zero Please Try Agian";
             }
-            return View();
+            catch(FormatException e)
+            {
+                ViewBag.formatError = "Plese Insert Integer 0-9 Only In TextInputField";
+            }
+            catch(Exception e)
+            {
+                ViewBag.excepError = "Error Read Exception Fix It => " + e;
+            }
+       return View();
         }
 
-        public ActionResult CheckNullErr(string FNum, string SNum)
-        {
-            if (FNum != null && SNum != null)
-            {
-                return RedirectToAction("Calculate");
-            }
-            else
-            {
-                ViewBag.NullErr = "Please Insert Number In Form";
-                return View();
-            }
-        }
+        //public ActionResult CheckDivZero(int a, int b, int c)
+        //{
+        //    if(b != 0)
+        //    {
+        //        c = a / b;
+        //    }
+        //    else
+        //    {
+        //        ViewBag.DivZero = "Div By Zero Please Try Agian";
+        //    }
+        //    return View();
+        //}
+
+        //public ActionResult CheckNullErr(string FNum, string SNum)
+        //{
+        //    if (FNum != null && SNum != null)
+        //    {
+        //        return RedirectToAction("Calculate");
+        //    }
+        //    else
+        //    {
+        //        ViewBag.NullErr = "Please Insert Number In Form";
+        //        return View();
+        //    }
+        //}
     }
 }
